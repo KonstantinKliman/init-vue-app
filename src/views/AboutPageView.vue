@@ -8,7 +8,7 @@
     </v-app-bar>
 
     <v-main>
-      <p>Welcome to Home Page</p>
+      <p>Welcome to {{ pageTitle }}</p>
       <router-view></router-view>
     </v-main>
   </v-app>
@@ -18,7 +18,7 @@
 import NavigationComponent from "@/components/NavigationComponent";
 
 export default {
-  name: 'HomePageView',
+  name: 'AboutPageView',
   components: {
     NavigationComponent
   },

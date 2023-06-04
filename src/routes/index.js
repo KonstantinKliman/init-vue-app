@@ -1,40 +1,56 @@
-import HomePage from '@/views/HomePageView'
-import LoginPage from '@/views/LoginPageView'
-import SignupPage from "@/views/SignupPageView";
+import HomePage from '@/views/HomePageView';
+import LoginPage from '@/views/LoginPageView';
+import SignupPage from '@/views/SignupPageView';
+import AboutPage from '@/views/AboutPageView';
+import ContactsPage from '@/views/ContactsPageView'
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
     {
         path: '/',
         component: HomePage,
-        meta : {
+        name: 'HomePage',
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: '/about',
+        component: AboutPage,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/contacts',
+        component: ContactsPage,
+        meta: {
             requiresAuth: true
         }
     },
     {
         path: '/login',
-        component: LoginPage
+        component: LoginPage,
     },
     {
-        path:'/signup',
-        component: SignupPage
-    }
+        path: '/signup',
+        component: SignupPage,
+    },
 ];
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: routes
+    routes: routes,
 });
 
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = !!localStorage.getItem('accessToken'); // Проверка наличия токена доступа
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const isAuthenticated = !!localStorage.getItem('accessToken');
+    const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
     if (requiresAuth && !isAuthenticated) {
-        next('/login'); // Перенаправление на страницу логина
+        next('/login');
     } else {
-        next(); // Продолжение навигации
+        next();
     }
 });
-
 
 export default router;
